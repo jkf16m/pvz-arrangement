@@ -405,8 +405,16 @@ public:
     int                             mFirstAllowedWave; // first spawning wave its allowed to spawn, (10 waves = 1 flag)
     int                             mPickWeight; // actual weight used in choosing the zombie type (see PickZombieType() in Board.cpp for info)
     const SexyChar*                 mZombieName; // the name
+    SeedType                        mZombieWeaknesses[PlantGroups::MAX_GROUP_SIZE]; // Plants that can beat this zombie easier
+    SeedType                        mZombieStrenghts[PlantGroups::MAX_GROUP_SIZE]; // Plants that this zombie can beat easier
 };
+
+
 extern ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES];  
+
+namespace PlantGroups {
+    const int MAX_GROUP_SIZE = 10;
+};
 
 /*inline*/ ZombieDefinition&            GetZombieDefinition(ZombieType theZombieType);
 

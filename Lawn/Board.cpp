@@ -1942,10 +1942,6 @@ Coin* Board::AddCoin(int theX, int theY, CoinType theCoinType, CoinMotion theCoi
 {
 	Coin* aCoin = mCoins.DataArrayAlloc();
 	aCoin->CoinInitialize(theX, theY, theCoinType, theCoinMotion);
-	if (mApp->IsFirstTimeAdventureMode() && mLevel == 1)
-	{
-		DisplayAdvice(_S("[ADVICE_CLICK_ON_SUN]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LEVEL1_STAY, AdviceType::ADVICE_CLICK_ON_SUN);
-	}
 	return aCoin;
 }
 
@@ -2407,7 +2403,10 @@ ZombieType Board::PickZombieType(int theZombiePoints, int theWaveIndex, ZombiePi
 				continue;
 			}
 		}
-		else if (aGameMode != GameMode::GAMEMODE_CHALLENGE_POGO_PARTY && aGameMode != GameMode::GAMEMODE_CHALLENGE_BOBSLED_BONANZA && aGameMode != GameMode::GAMEMODE_CHALLENGE_AIR_RAID)
+		else // Executes on adventure mode too
+		if (aGameMode != GameMode::GAMEMODE_CHALLENGE_POGO_PARTY
+			&& aGameMode != GameMode::GAMEMODE_CHALLENGE_BOBSLED_BONANZA
+			&& aGameMode != GameMode::GAMEMODE_CHALLENGE_AIR_RAID)
 		{
 			int aFirstAllowedWave = aZombieDef.mFirstAllowedWave;
 			if (mApp->IsSurvivalEndless(aGameMode))
@@ -3774,55 +3773,6 @@ void Board::MouseDownWithPlant(int x, int y, int theClickCount)
 		}
 	}
 
-	if (mTutorialState == TutorialState::TUTORIAL_LEVEL_1_PLANT_PEASHOOTER)
-	{
-		SetTutorialState(mPlants.mSize >= 2 ? TutorialState::TUTORIAL_LEVEL_1_COMPLETED : TutorialState::TUTORIAL_LEVEL_1_REFRESH_PEASHOOTER);
-	}
-	else if (mTutorialState == TutorialState::TUTORIAL_LEVEL_2_PLANT_SUNFLOWER)
-	{
-		int aSunFlowersCount = CountSunFlowers();
-		if (aPlantingSeedType == SeedType::SEED_SUNFLOWER && aSunFlowersCount == 2)
-		{
-			DisplayAdvice(_S("[ADVICE_MORE_SUNFLOWERS]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LEVEL2, AdviceType::ADVICE_NONE);
-			if (!mSeedBank->mSeedPackets[1].CanPickUp())
-			{
-				SetTutorialState(TutorialState::TUTORIAL_LEVEL_2_REFRESH_SUNFLOWER);
-			}
-			else
-			{
-				SetTutorialState(TutorialState::TUTORIAL_LEVEL_2_PICK_UP_SUNFLOWER);
-			}
-		}
-		else if (aSunFlowersCount >= 3)
-		{
-			SetTutorialState(TutorialState::TUTORIAL_LEVEL_2_COMPLETED);
-		}
-		else if (!mSeedBank->mSeedPackets[1].CanPickUp())
-		{
-			SetTutorialState(TutorialState::TUTORIAL_LEVEL_2_REFRESH_SUNFLOWER);
-		}
-		else
-		{
-			SetTutorialState(TutorialState::TUTORIAL_LEVEL_2_PICK_UP_SUNFLOWER);
-		}
-	}
-	else if (mTutorialState == TutorialState::TUTORIAL_MORESUN_PLANT_SUNFLOWER)
-	{
-		if (CountSunFlowers() >= 3)
-		{
-			SetTutorialState(TutorialState::TUTORIAL_MORESUN_COMPLETED);
-			DisplayAdvice(_S("[ADVICE_PLANT_SUNFLOWER5]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LATER, AdviceType::ADVICE_PLANT_SUNFLOWER5);
-			mTutorialTimer = -1;
-		}
-		else if (!mSeedBank->mSeedPackets[1].CanPickUp())
-		{
-			SetTutorialState(TutorialState::TUTORIAL_MORESUN_REFRESH_SUNFLOWER);
-		}
-		else
-		{
-			SetTutorialState(TutorialState::TUTORIAL_MORESUN_PICK_UP_SUNFLOWER);
-		}
-	}
 
 	if (mApp->IsWallnutBowlingLevel())
 	{
@@ -5079,22 +5029,18 @@ void Board::UpdateSunSpawning()
 		mTutorialState == TutorialState::TUTORIAL_SLOT_MACHINE_PULL)
 		return;
 
-	if (mTutorialState == TutorialState::TUTORIAL_LEVEL_1_PICK_UP_PEASHOOTER || mTutorialState == TutorialState::TUTORIAL_LEVEL_1_PLANT_PEASHOOTER)
-	{
-		if (mPlants.mSize == 0)
-		{
-			return;
-		}
-	}
-
 	mSunCountDown--;
 	if (mSunCountDown != 0)
 		return;
 
 	mNumSunsFallen++;
 	mSunCountDown = min(SUN_COUNTDOWN_MAX, SUN_COUNTDOWN + mNumSunsFallen * 10) + Rand(SUN_COUNTDOWN_RANGE);
-	CoinType aSunType = mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_SUNNY_DAY ? CoinType::COIN_LARGESUN : CoinType::COIN_SUN;
-	AddCoin(RandRangeInt(100, 649), 60, aSunType, CoinMotion::COIN_MOTION_FROM_SKY);
+	
+	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_SUNNY_DAY) {
+		CoinType aSunType = CoinType::COIN_LARGESUN;
+
+		AddCoin(RandRangeInt(100, 649), 60, aSunType, CoinMotion::COIN_MOTION_FROM_SKY);
+	}
 }
 
 void Board::NextWaveComing()
@@ -5551,20 +5497,6 @@ void Board::UpdateGame()
 	if (mFogBlownCountDown > 0)
 	{
 		mFogBlownCountDown--;
-	}
-
-	if (mMainCounter == 1 && mApp->IsFirstTimeAdventureMode())
-	{
-		if (mLevel == 1)
-		{
-			SetTutorialState(TutorialState::TUTORIAL_LEVEL_1_PICK_UP_PEASHOOTER);
-		}
-		else if (mLevel == 2)
-		{
-			SetTutorialState(TutorialState::TUTORIAL_LEVEL_2_PICK_UP_SUNFLOWER);
-			DisplayAdvice(_S("[ADVICE_PLANT_SUNFLOWER1]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LEVEL2, AdviceType::ADVICE_NONE);
-			mTutorialTimer = 500;
-		}
 	}
 
 	UpdateProgressMeter();

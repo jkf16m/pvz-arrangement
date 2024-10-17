@@ -298,6 +298,14 @@ public:
 float                       PlantDrawHeightOffset(Board* theBoard, Plant* thePlant, SeedType theSeedType, int theCol, int theRow);
 float                       PlantFlowerPotHeightOffset(SeedType theSeedType, float theFlowerPotScale);
 
+enum ScoreType {
+    BASIC,
+    THREE_ROWS,
+    TARGETED,
+    INSTANT,
+    COLUMN
+};
+
 class PlantDefinition
 {
 public:
@@ -310,7 +318,21 @@ public:
     PlantSubClass           mSubClass;         // for Shooter plants ex: peashooter, 2 variants SUBCLASS_NORMAL and SUBCLASS_SHOOTER
     int                     mLaunchRate;       // how often the plant does its ability
     const SexyChar*         mPlantName;        // plant name
+    ScoreType               mScoreType;        // how to value its strength
+    int                     mScore;            // how strong is this plant
 };
 extern PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES];
 
 /*inline*/ PlantDefinition& GetPlantDefinition(SeedType theSeedType);
+
+
+
+// EXTRA MOD CODE
+namespace PlantsRechargeTime{
+    const int FAST      = 325;
+    const int AVERAGE   = 750;
+    const int SLOW      = 1500;
+    const int VERY_SLOW = 3000;
+    const int SNAIL     = 5000;
+    const int A_MONTH   = 10000;
+};
