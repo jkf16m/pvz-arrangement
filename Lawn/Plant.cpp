@@ -87,7 +87,7 @@ namespace PlantsAttributes {
         const int BITE_DAMAGE = 80;
     }
     namespace WallNut {
-        const int HEALTH = 500;
+        const int HEALTH = 1000;
     }
     namespace TallNut {
         const int HEALTH = 8000;
