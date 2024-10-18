@@ -5309,49 +5309,6 @@ void Board::UpdateProgressMeter()
 
 void Board::UpdateTutorial()
 {
-	if (mTutorialTimer > 0)
-		mTutorialTimer--;
-
-	if (mTutorialState == TutorialState::TUTORIAL_LEVEL_1_PICK_UP_PEASHOOTER && mTutorialTimer == 0)
-	{
-		DisplayAdvice(_S("[ADVICE_CLICK_PEASHOOTER]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LEVEL1_STAY, AdviceType::ADVICE_NONE);
-		TutorialArrowShow(mSeedBank->mX + mSeedBank->mSeedPackets[0].mX, mSeedBank->mY + mSeedBank->mSeedPackets[0].mY);
-		mTutorialTimer = -1;
-	}
-	else if (mTutorialState == TutorialState::TUTORIAL_LEVEL_2_PICK_UP_SUNFLOWER || 
-		mTutorialState == TutorialState::TUTORIAL_LEVEL_2_PLANT_SUNFLOWER ||
-		mTutorialState == TutorialState::TUTORIAL_LEVEL_2_REFRESH_SUNFLOWER)
-	{
-		if (mTutorialTimer == 0)
-		{
-			DisplayAdvice(_S("[ADVICE_PLANT_SUNFLOWER2]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LEVEL2, AdviceType::ADVICE_NONE);
-			mTutorialTimer = -1;
-		}
-		else if (mZombieCountDown == 750 && mCurrentWave == 0)
-		{
-			DisplayAdvice(_S("[ADVICE_PLANT_SUNFLOWER3]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LEVEL2, AdviceType::ADVICE_NONE);
-		}
-	}
-	else if (mTutorialState == TutorialState::TUTORIAL_MORESUN_PICK_UP_SUNFLOWER || 
-		mTutorialState == TutorialState::TUTORIAL_MORESUN_PLANT_SUNFLOWER ||
-		mTutorialState == TutorialState::TUTORIAL_MORESUN_REFRESH_SUNFLOWER)
-	{
-		if (mTutorialTimer == 0)
-		{
-			DisplayAdvice(_S("[ADVICE_PLANT_SUNFLOWER5]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LATER, AdviceType::ADVICE_PLANT_SUNFLOWER5);
-			mTutorialTimer = -1;
-		}
-	}
-
-	if (mApp->IsFirstTimeAdventureMode() && mLevel >= 3 && mLevel != 5 && mLevel <= 7 && mTutorialState == TutorialState::TUTORIAL_OFF &&
-		mCurrentWave >= 5 && !gShownMoreSunTutorial && mSeedBank->mSeedPackets[1].CanPickUp() && CountPlantByType(SeedType::SEED_SUNFLOWER) < 3)
-	{
-		TOD_ASSERT(!ChooseSeedsOnCurrentLevel());
-		DisplayAdvice(_S("[ADVICE_PLANT_SUNFLOWER4]"), MessageStyle::MESSAGE_STYLE_TUTORIAL_LATER_STAY, AdviceType::ADVICE_NONE);
-		gShownMoreSunTutorial = true;
-		SetTutorialState(TutorialState::TUTORIAL_MORESUN_PICK_UP_SUNFLOWER);
-		mTutorialTimer = 500;
-	}
 }
 
 void Board::SetTutorialState(TutorialState theTutorialState)
