@@ -77,23 +77,6 @@ PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES] = {
     { SeedType::SEED_LEFTPEATER,        nullptr, ReanimationType::REANIM_REPEATER,      5,  0,      PlantsRechargeTime::FAST,       PlantSubClass::SUBCLASS_SHOOTER,    150,    _S("REPEATER") }
 };
 
-namespace PlantsAttributes {
-    const int HEALTH = 50;
-
-    namespace PotatoMine {
-        const int ARMING_COOLDOWN = PlantsRechargeTime::FAST;
-    };
-    namespace Chomper {
-        const int BITE_DAMAGE = 80;
-    }
-    namespace WallNut {
-        const int HEALTH = 1000;
-    }
-    namespace TallNut {
-        const int HEALTH = 8000;
-    }
-};
-
 const int PLANT_POTATO_ARMING_COOLDOWN = PlantsAttributes::PotatoMine::ARMING_COOLDOWN;
 
 Plant::Plant()

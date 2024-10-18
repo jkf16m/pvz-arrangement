@@ -336,3 +336,23 @@ namespace PlantsRechargeTime{
     const int SNAIL     = 5000;
     const int A_MONTH   = 10000;
 };
+
+
+
+namespace PlantsAttributes {
+    const int HEALTH = 50;
+
+    namespace PotatoMine {
+        const int ARMING_COOLDOWN = PlantsRechargeTime::FAST;
+        const int DAMAGE = 400;
+    };
+    namespace Chomper {
+        const int BITE_DAMAGE = 80;
+    }
+    namespace WallNut {
+        const int HEALTH = 1000;
+    }
+    namespace TallNut {
+        const int HEALTH = 8000;
+    }
+};
