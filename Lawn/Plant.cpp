@@ -4342,7 +4342,7 @@ void Plant::DoSpecial()
         aPosY = mY + mHeight / 2;
 
         mApp->PlaySample(SOUND_POTATO_MINE);
-        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 60, 0, false, aDamageRangeFlags);
+        mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 60, 0, false, aDamageRangeFlags, SeedType::SEED_POTATOMINE);
         if(!mApp->IsIZombieLevel() && !mApp->mPlayedQuickplay)
             mApp->GetAchievement(AchievementType::ACHIEVEMENT_SPUDOW);
 

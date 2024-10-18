@@ -9455,12 +9455,12 @@ void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius
 
 			if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
 			{
-				if (theBurn)
+				if (theDamager == SeedType::SEED_POTATOMINE) {
+					aZombie->TakeDamage(PlantsAttributes::PotatoMine::DAMAGE, 18U);
+				}
+				else if (theBurn)
 				{
 					aZombie->ApplyBurn();
-				}
-				else if (theDamager == SeedType::SEED_POTATOMINE) {
-					aZombie->TakeDamage(PlantsAttributes::PotatoMine::DAMAGE, 18U);
 				}
 				else
 				{
