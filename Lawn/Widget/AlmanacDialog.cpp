@@ -460,10 +460,21 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 		SexyString aCostStr = TodReplaceString(StrFormat(_S("{KEYWORD}{COST}:{STAT} %d"), aPlantDef.mSeedCost), _S("{COST}"), _S("[COST]"));
 		TodDrawStringWrapped(g, aCostStr, Rect(485, 520, 134, 50), Sexy::FONT_BRIANNETOD12, Color::White, DS_ALIGN_LEFT);
 
+		SexyString aWaitTimeText;
+		if (aPlantDef.mRefreshTime <= 750) {
+			aWaitTimeText = _S("[WAIT_TIME_SHORT]");
+		}
+		else if (aPlantDef.mRefreshTime <= 3000) {
+			aWaitTimeText = _S("[WAIT_TIME_LONG]");
+		}
+		else if (aPlantDef.mRefreshTime > 3000) {
+			aWaitTimeText = _S("WAIT_TIME_VERY_LONG");
+		}
+
 		SexyString aRechargeStr = TodReplaceString(
 			_S("{KEYWORD}{WAIT_TIME}:{STAT} {WAIT_TIME_LENGTH}"), 
 			_S("{WAIT_TIME_LENGTH}"),
-			aPlantDef.mRefreshTime == 750 ? _S("[WAIT_TIME_SHORT]") : aPlantDef.mRefreshTime == 3000 ? _S("[WAIT_TIME_LONG]") : _S("[WAIT_TIME_VERY_LONG]")
+			aWaitTimeText
 		);
 		aRechargeStr = TodReplaceString(aRechargeStr, _S("{WAIT_TIME}"), _S("[WAIT_TIME]"));
 		TodDrawStringWrapped(g, aRechargeStr, Rect(600, 520, 139, 50), Sexy::FONT_BRIANNETOD12, Color(40, 50, 90), DS_ALIGN_RIGHT);
