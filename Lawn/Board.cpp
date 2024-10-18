@@ -5174,7 +5174,7 @@ void Board::UpdateZombieSpawning()
 		{
 			ClearAdviceImmediately();
 			DisplayAdviceAgain(_S("[ADVICE_HUGE_WAVE]"), MessageStyle::MESSAGE_STYLE_HUGE_WAVE, AdviceType::ADVICE_HUGE_WAVE);
-			mHugeWaveCountDown = 750;
+			mHugeWaveCountDown = 400;
 			return;
 		}
 		NextWaveComing();
