@@ -9433,7 +9433,7 @@ bool Board::PlantingRequirementsMet(SeedType theSeedType)
 	}
 }
 
-void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, bool theBurn, int theDamageRangeFlags)
+void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, bool theBurn, int theDamageRangeFlags, SeedType theDamager = SEED_NONE)
 {
 	Zombie* aZombie = nullptr;
 	while (IterateZombies(aZombie))
@@ -9452,6 +9452,9 @@ void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius
 				if (theBurn)
 				{
 					aZombie->ApplyBurn();
+				}
+				else if (theDamager == SeedType::SEED_POTATOMINE) {
+					aZombie->TakeDamage(PlantsAttributes::PotatoMine::DAMAGE, 18U);
 				}
 				else
 				{
