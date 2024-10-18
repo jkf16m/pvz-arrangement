@@ -9433,6 +9433,12 @@ bool Board::PlantingRequirementsMet(SeedType theSeedType)
 	}
 }
 
+void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, bool theBurn, int theDamageRangeFlags)
+{
+	KillAllZombiesInRadius(theRow, theX, theY, theRadius, theRowRange, theBurn, theDamageRangeFlags, SEED_NONE);
+}
+
+
 void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, bool theBurn, int theDamageRangeFlags, SeedType theDamager = SEED_NONE)
 {
 	Zombie* aZombie = nullptr;
