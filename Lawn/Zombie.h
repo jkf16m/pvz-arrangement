@@ -395,6 +395,11 @@ public:
     static /*inline*/ bool			IsZombotany(ZombieType theZombieType);
 };
 
+
+namespace PlantGroups {
+    const int MAX_GROUP_SIZE = 10;
+};
+
 class ZombieDefinition
 {
 public:
@@ -412,9 +417,6 @@ public:
 
 extern ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES];  
 
-namespace PlantGroups {
-    const int MAX_GROUP_SIZE = 10;
-};
 
 /*inline*/ ZombieDefinition&            GetZombieDefinition(ZombieType theZombieType);
 
