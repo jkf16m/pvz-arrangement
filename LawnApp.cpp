@@ -2347,7 +2347,7 @@ bool LawnApp::IsWallnutBowlingLevel()
 	if (mPlayedQuickplay)
 		return mQuickLevel == 5;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 5;
+	return false;
 }
 
 bool LawnApp::IsSlotMachineLevel()
